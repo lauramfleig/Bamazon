@@ -47,7 +47,6 @@ function beginInquirer() {
 function viewProducts() {
     connection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function (err, res) {
         console.table('Bamazon items for Sale', res);
-        connection.end();
 
     });
 
@@ -89,7 +88,8 @@ function addInventory() {
                 if (err) {
                     throw err;
                 }
-                console.table('Updated Inventory', res);
+                console.log('Updated Inventory');
+                viewProducts();
                 connection.end();
             });
     })
