@@ -38,8 +38,8 @@ function beginInquirer() {
                 addInventory();
                 break;
 
-            // case 'Add New Product':
-            //     addProduct();
+            case 'Add New Product':
+                addProduct();
         }
     })
 }
@@ -47,6 +47,8 @@ function beginInquirer() {
 function viewProducts() {
     connection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function (err, res) {
         console.table('Bamazon items for Sale', res);
+        connection.end();
+
     });
 
 }
@@ -54,6 +56,7 @@ function viewProducts() {
 function viewLowInventory() {
     connection.query("SELECT product_name, stock_quantity FROM products WHERE stock_quantity < 100", function (err, res) {
         console.table('Items with Low Inventory', res);
+        connection.end();
     })
 
 }
@@ -89,14 +92,55 @@ function addInventory() {
                 console.table('Updated Inventory', res);
                 connection.end();
             });
-        })
-     
+    })
+
 }
 
+function addProduct() {
+    inquirer.prompt([{
+        name: "department",
+        message: "Select the Correct Department for the Item you'd like to Add: ",
+        type: "list",
+        choices: ['Vehicles', 'Pets', 'Home Furnishings', 'Technology']
+    }, {
+        name: "name",
+        message: "Enter a Name for the Item you'd like to Add: "
+    }, {
+        name: "price",
+        message: "Enter a Price to Set for this Item: "
+    }, {
+        name: "quantity",
+        message: "How many units of this Item is in Inventory?: "
 
-//PROBLEM TO SOLVE: Need to figure out how to access current inventory so I can add a new number to it 
+    }]).then(function (answers) {
+        let chosenDepartment;
+        let productName = answers.name;
+        let productPrice = parseInt(answers.price);
+        let productQuantity = parseInt(answers.quantity);
 
-// function addProduct() {
+        switch (answers.department) {
+            case 'Vehicles':
+                chosenDepartment = 'Vehicles';
+                break;
 
-// }
+            case 'Pets':
+                chosenDepartment = 'Pets';
+                break;
 
+            case 'Home Furnishings':
+                chosenDepartment = 'Home Furnishings';
+                break;
+
+            case 'Technology':
+                chosenDepartment = 'Technology'
+        }
+
+        connection.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES " + "(" + "'" + productName + "'" + "," + "'" + chosenDepartment + "'" + "," + "'" + productPrice + "'" + "," + "'" + productQuantity + "'" + ")", (function (err, res) {
+            if (err) throw err;
+            console.log('You have successfully added a product to the table!')
+            viewProducts();
+            connection.end();
+
+        }))
+    })
+}
