@@ -1,3 +1,5 @@
+  
+
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
@@ -32,19 +34,33 @@ function displayAllItems() {
 }
 
 //Function that subtracts the chosenUnits from the productInventory
-function validOrder(inventory, units) {
+function validOrder(inventory, units, itemID) {
     inventory = inventory - units;
     //update the stock quantity based on the quantity the user entered
-    connection.query("UPDATE products SET stock_quantity =" + inventory + " WHERE item_id =" + units, function (err, res) {
+    connection.query("UPDATE products SET stock_quantity =" + inventory + " WHERE item_id =" + itemID, function (err, res) {
         if (err) throw err;
+    })
+}
+
+function invalidOrder() {
+    inquirer.prompt([{
+        name: "tryAgain",
+        message: "Would you like to Start Over?",
+        type: "list",
+        choices: ['Yes', 'No']
+    }]).then (function (answers){
+        if (answers.tryAgain == 'Yes') {
+           beginInquirer();
+        } else if (answers.tryAgain == 'No')
+            { console.log('Thanks for using Bamazon! Goodbye!') }
     })
 }
 
 //function to display the price of the item selected by the user
 function displayPrice(chosenID) {
-    connection.query("SELECT price FROM products where item_id=" + chosenID, function(err, res){
+    connection.query("SELECT price FROM products where item_id=" + chosenID, function (err, res) {
         console.log('That items costs: ' + '$' + res[0].price)
-        let totalOrderPrice = res[0].price 
+        let totalOrderPrice = res[0].price
     })
 
 }
@@ -53,11 +69,8 @@ function displayPrice(chosenID) {
 function beginInquirer() {
 
     inquirer.prompt([{
-        name: "pushEnter",
-        message: 'Items for Sale: ' + '\n\n'
-    }, {
         name: "enterID",
-        message: "Enter the ID of the Item You'd like to Purchase: "
+        message: "Enter the ID of the Item You'd like to Purchase: \n \n "
     }, {
         name: "enterUnits",
         message: "How many Units of this Item would you like to Purchase?: "
@@ -77,10 +90,11 @@ function checkInventoy(chosenID, chosenUnits) {
             //if the user enters more units than are available
             if (productInventory < chosenUnits) {
                 console.log('Insufficient Quantity!! There are only ' + productInventory + ' of that product available')
-            //if the user enters less or = units than are available
+                invalidOrder();
+                //if the user enters less or = units than are available
             } else if (productInventory >= chosenUnits) {
                 //update the inventory on the database
-                validOrder(productInventory, chosenUnits);
+                validOrder(productInventory, chosenUnits, chosenID);
                 //tell the user how much their order costs
                 displayPrice(chosenID);
             }
