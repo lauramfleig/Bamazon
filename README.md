@@ -17,7 +17,7 @@ Application that uses a mySQL database to store product information and inventor
 ## The Customer Experience
 
 Upon Initializing the App:
-[logo]: https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.11.28%20PM.png?raw=true
+![alt text](https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.11.28%20PM.png?raw=true)
 
 
 
