@@ -16,7 +16,18 @@ Application that uses a mySQL database to store product information and inventor
 
 ## The Customer Experience
 
-Upon Initializing the App:
-![alt text](https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.11.28%20PM.png?raw=true width=250)
+-mySQL Initial Database:
+<img src="https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.13.36%20PM.png?raw=true">
+
+-Upon Initializing the Application---View Table
+<img src="https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.14.28%20PM.png?raw=true">
+
+-User Input Results
+<img src="https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.12.53%20PM.png?raw=true">
+
+-Updated mySQL Database:
+<img src="https://github.com/lauramfleig/Bamazon/blob/master/Bamazon%20Customer%20Img/Screen%20Shot%202018-02-09%20at%203.11.28%20PM.png?raw=true">
+
+
 
 
